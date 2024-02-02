@@ -2,12 +2,15 @@
 
 <?php
     $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT * FROM `films`;");
+    $genre = $_GET["genre"];
+    $result = $mysql->query("SELECT * FROM `films_genre` WHERE id_genre = (SELECT id FROM genre WHERE genre.genre = '$genre' )");
+//    $res = $mysql->query("SELECT  * FROM `films`, `films_genre` WHERE id_genre = (SELECT DISTINCT id FROM genre WHERE genre.genre = '$genre' )");
+//    var_dump($res->fetch_assoc());
     $mysql->close();
 ?>
 
 <main>
-    <h3 style="color: white; margin-left: 120px" class="mt-3" >Новинки</h3>
+    <h3 style="color: white; margin-left: 120px" class="mt-3" ><?=$genre?></h3>
         <div class="container" style="display: flex; flex-wrap: wrap; margin: 0 auto">
         <hr>
             <?php while ($row = $result->fetch_assoc()) : ?>

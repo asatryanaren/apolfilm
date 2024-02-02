@@ -2,12 +2,12 @@
 
 <?php
     $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT * FROM `films`;");
+    $result = $mysql->query("SELECT * FROM `films` WHERE films.rating > 7");
     $mysql->close();
 ?>
 
 <main>
-    <h3 style="color: white; margin-left: 120px" class="mt-3" >Новинки</h3>
+    <h3 style="color: white; margin-left: 120px" class="mt-3" >Лучшее</h3>
         <div class="container" style="display: flex; flex-wrap: wrap; margin: 0 auto">
         <hr>
             <?php while ($row = $result->fetch_assoc()) : ?>

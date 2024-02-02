@@ -2,7 +2,6 @@
 <?php
     $mysql = new mysqli("localhost", "root", "", "my_films");
     $result = $mysql->query("SELECT * FROM `genre`");
-//    $countGenreFilms = $mysql->query("SELECT * FROM `films`");
     $mysql->close();
 ?>
 
@@ -11,12 +10,16 @@
     <div class="container" style="display: flex; flex-wrap: wrap; margin: 0 auto">
         <hr>
         <?php while ($row = $result->fetch_assoc()) : ?>
+        <?php $id = $row['id'] ?>
             <div class="movies" style="width: 300px; margin:  10px">
-                <a href="oneMovie.php?id=<?= $row['id'] ?>" class="card text-decoration-none movies__item">
-                    <img src="images/genreImg/<?=$row["img"]?>" height="200px" class="card-img-top" alt="...">
+                <a href="filterCategories.php?genre=<?= $row['genre'] ?>" class="card text-decoration-none movies__item">
                     <div class="card-body">
                         <h5 class="card-title"><?=$row["genre"]?></h5>
-                        <p class="card-text">Фильмов <span class="badge bg-info warn__badge">10</span></p>
+                        <p class="card-text">Фильмов <span class="badge bg-info warn__badge">
+                                <?php  $mysql = new mysqli("localhost", "root", "", "my_films");
+                                $res = $mysql->query("SELECT COUNT(id_genre) FROM `films_genre` WHERE films_genre.id_genre = '$id'")->fetch_assoc();
+                                echo $res["COUNT(id_genre)"] ; ?></span>
+                        </p>
                     </div>
                 </a>
             </div>

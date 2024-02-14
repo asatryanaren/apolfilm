@@ -21,10 +21,10 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
                     <a href="../index.php" class="nav-link px-2 text-secondary d-flex align-items-center column-gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
                             <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.707 1.5ZM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5 5 5Z"/>
                         </svg>
-                        <span>Главная</span>
+                        <span style="color: white" >Главная</span>
                     </a>
                 </li>
 
@@ -69,9 +69,11 @@
     </div>
 </header>
 
+<?php //require_once "header/header.php"?>
+
 <main>
     <div class="container">
-        <h3 class="mt-3">Регистрация</h3>
+        <h3 class="mt-3" style="color: white">Регистрация</h3>
         <hr>
     </div>
     <div class="container d-flex justify-content-center">
@@ -116,15 +118,4 @@
     </div>
 </main>
 
-<footer class="py-3 mt-auto">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Главная</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Лучшее</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Жанры</a></li>
-    </ul>
-    <p class="text-center text-body-secondary">© 2023 Кинопоиск Lite</p>
-</footer>
-
-<script src="../assets/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<?php require_once "footer/footer.php"?>

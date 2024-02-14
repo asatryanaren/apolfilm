@@ -1,7 +1,9 @@
 <?php require_once "view/header/header.php"; ?>
 <?php
-    $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT * FROM `genre`");
+    require_once "controllers/connect.php";
+    $result = $mysql->query("SELECT genre.genre, COUNT(DISTINCT films_genre.id_film) AS count_films FROM genre
+                                    INNER JOIN films_genre ON genre.id = films_genre.id_genre
+                                    INNER JOIN films ON films.id = films_genre.id_film WHERE films.id = films_genre.id_film GROUP BY  genre.genre;");
     $mysql->close();
 ?>
 
@@ -16,9 +18,8 @@
                     <div class="card-body">
                         <h5 class="card-title"><?=$row["genre"]?></h5>
                         <p class="card-text">Фильмов <span class="badge bg-info warn__badge">
-                                <?php  $mysql = new mysqli("localhost", "root", "", "my_films");
-                                $res = $mysql->query("SELECT COUNT(id_genre) FROM `films_genre` WHERE films_genre.id_genre = '$id'")->fetch_assoc();
-                                echo $res["COUNT(id_genre)"] ; ?></span>
+                                <?=$row["count_films"]?>
+                            </span>
                         </p>
                     </div>
                 </a>

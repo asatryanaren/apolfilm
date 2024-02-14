@@ -1,3 +1,9 @@
+<?php
+    $name = $_COOKIE["user"];
+    $mysql = new mysqli("localhost", "root", "", "my_films");
+    $result = $mysql->query("SELECT regist_users.* FROM regist_users WHERE regist_users.name = '$name';")->fetch_assoc();
+?>
+
 <!doctype html>
 <html lang="ru" data-bs-theme="dark">
 <head>
@@ -47,6 +53,13 @@
                         <span>Жанры</span>
                     </a>
                 </li>
+                <?php if ($result["role"]) : ?>
+                    <li>
+                        <a href="../../admin.php" class="nav-link px-2 text-white d-flex align-items-center column-gap-2">
+                            <span>Админ</span>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
             <?php if ( $_COOKIE["user"] == "" ) : ?>
             <div class="d-flex align-items-center text-end">

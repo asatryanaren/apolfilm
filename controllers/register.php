@@ -1,4 +1,6 @@
 <?php
+require_once "controllers/connect.php";
+
 
 $login = filter_var(trim($_POST["login"]), FILTER_SANITIZE_STRING);
 $pass = filter_var(trim($_POST["password"]), FILTER_SANITIZE_STRING);
@@ -21,9 +23,9 @@ if (mb_strlen($login) < 5 || mb_strlen($login) > 90) {
 
 $pass = md5($pass."adsax655");
 
-$mysql = new mysqli("localhost", "root", "", "my_films");
+
 $mysql->query("INSERT INTO `regist_users` (`login`, `pass`, `name`) VALUES ('$login','$pass','$name')");
 
 $mysql->close();
 
-header("Location: ../login.tpl.php");
+header("Location: ../view/login.tpl.php");

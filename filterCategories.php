@@ -1,11 +1,14 @@
 <?php require_once "view/header/header.php"; ?>
 
 <?php
-    $mysql = new mysqli("localhost", "root", "", "my_films");
+    require_once "controllers/connect.php";
     $genre = $_GET["genre"];
-    $result = $mysql->query("SELECT * FROM `films_genre` WHERE id_genre = (SELECT id FROM genre WHERE genre.genre = '$genre' )");
-//    $res = $mysql->query("SELECT  * FROM `films`, `films_genre` WHERE id_genre = (SELECT DISTINCT id FROM genre WHERE genre.genre = '$genre' )");
-//    var_dump($res->fetch_assoc());
+//SELECT genre.genre, COUNT(DISTINCT films_genre.id_film) AS count_films FROM genre
+//                                    INNER JOIN films_genre ON genre.id = films_genre.id_genre
+//                                    INNER JOIN films ON films.id = films_genre.id_film WHERE films.id = films_genre.id_film GROUP BY  genre.genre;
+
+    $result = $mysql->query("SELECT DISTINCT films.* FROM films INNER JOIN films_genre ON films.id = films_genre.id_film
+                                    INNER JOIN genre ON films_genre.id_genre = genre.id WHERE genre.genre = '$genre';");
     $mysql->close();
 ?>
 

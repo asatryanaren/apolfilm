@@ -1,8 +1,13 @@
 <?php require_once "view/header/header.php"; ?>
 
 <?php
-    $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT * FROM `films`;");
+    require_once "controllers/connect.php";
+
+    $result = $mysql->query("SELECT films.*, GROUP_CONCAT(DISTINCT genre.genre SEPARATOR ', ') AS genres, 
+                                    AVG(CASE WHEN comments.id_comment = films.id THEN comments.rating ELSE NULL END) AS average_rating FROM films 
+                                    LEFT JOIN films_genre ON films.id = films_genre.id_film 
+                                    LEFT JOIN genre ON films_genre.id_genre = genre.id
+                                    LEFT JOIN comments ON films.id = comments.id_comment GROUP BY films.id;");
     $mysql->close();
 ?>
 
@@ -16,7 +21,7 @@
                         <img src="images/filmsImg/<?=$row["img"]?>" height="200px" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?=$row["name"]?></h5>
-                            <p class="card-text">Оценка <span class="badge bg-warning warn__badge"><?=$row["rating"]?></span></p>
+                            <p class="card-text">Оценка <span class="badge bg-warning warn__badge"><?=floor($row["average_rating"])?></span></p>
                             <p class="card-text"><?=$row["descriptions"]?></p>
                         </div>
                     </a>

@@ -9,6 +9,7 @@
     <script src="../assets/js/color-modes.js"></script>
 </head>
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
+
 <main class="form-signin w-100 m-auto">
     <form action="../controllers/login.php" method="post">
         <div class="d-flex" style="align-items: center; justify-content: space-between">

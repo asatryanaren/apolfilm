@@ -19,7 +19,12 @@ if (mb_strlen($login) != 0 || mb_strlen($pass) != 0) {
     setcookie("user", $user["name"], time() + 3600, "/");
 
     $mysql->close();
-    header("Location: /");
+    if (!empty($user)) {
+        header("Location: /");
+    }else{
+        header("Location: ../view/login.tpl.php");
+    }
+
 }
 
 

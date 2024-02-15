@@ -14,7 +14,7 @@
         <hr>
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="movies" style="width: 300px; margin:  10px">
-                    <a href="oneMovie.php?id=<?=$row["id"]?>" class="card text-decoration-none movies__item">
+                    <a href="onemovie?id=<?=$row["id"]?>" class="card text-decoration-none movies__item">
                         <img src="images/filmsImg/<?=$row["img"]?>" height="200px" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?=$row["name"]?></h5>

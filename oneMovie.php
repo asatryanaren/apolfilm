@@ -2,21 +2,17 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
         header("Location: ./". $_SERVER["PHP_SELF"]);
     }
-?>
-<?php require_once "view/header/header.php"; ?>
-<?php
-require_once "controllers/connect.php";
-$id = $_GET["id"];
-
-$result = $mysql->query("SELECT films.*, GROUP_CONCAT(DISTINCT genre.genre SEPARATOR ', ') AS genres,
-                                AVG(CASE WHEN comments.id_comment = films.id THEN comments.rating ELSE NULL END) AS average_rating FROM films 
-                                LEFT JOIN films_genre ON films.id = films_genre.id_film 
-                                LEFT JOIN genre ON films_genre.id_genre = genre.id 
-                                LEFT JOIN comments ON films.id = comments.id_comment WHERE films.id = '$id' GROUP BY films.id;")->fetch_assoc();
-
-$resultComments = $mysql->query("SELECT comments.* FROM films LEFT JOIN comments ON films.id = comments.id_comment
-                                        WHERE films.id = '$id' ORDER BY comments.date DESC;");
-$mysql->close();
+    require_once "view/header/header.php";
+    require_once "controllers/connect.php";
+    $id = $_GET["id"];
+    $result = $mysql->query("SELECT films.*, GROUP_CONCAT(DISTINCT genre.genre SEPARATOR ', ') AS genres,
+                                    AVG(CASE WHEN comments.id_comment = films.id THEN comments.rating ELSE NULL END) AS average_rating FROM films 
+                                    LEFT JOIN films_genre ON films.id = films_genre.id_film 
+                                    LEFT JOIN genre ON films_genre.id_genre = genre.id 
+                                    LEFT JOIN comments ON films.id = comments.id_comment WHERE films.id = '$id' GROUP BY films.id;")->fetch_assoc();
+    $resultComments = $mysql->query("SELECT comments.* FROM films LEFT JOIN comments ON films.id = comments.id_comment
+                                            WHERE films.id = '$id' ORDER BY comments.date DESC;");
+    $mysql->close();
 ?>
 
 <main>
@@ -26,7 +22,7 @@ $mysql->close();
                 <div class="row g-3">
                     <div class="col-md-4">
                         <img  src="images/filmsImg/<?=$result["img"]?>" class="img-fluid rounded one-movie__image" alt="...">
-                            <form action="controllers/comments.php" method="post" class="m-3 w-100">
+                            <form action="../../controllers/comments.php" method="post" class="m-3 w-100">
                                 <?= $grade ?>
                                 <select name="grade" class="form-select" aria-label="Default select example">
                                     <option selected>Оценка</option>
@@ -77,4 +73,4 @@ $mysql->close();
     </div>
 </main>
 
-<?php require_once "view/footer/footer.php"?>
+<?php require_once "view/footer/footer.php" ?>

@@ -1,8 +1,6 @@
-<?php require_once "view/header/header.php"; ?>
 <?php
+    require_once "view/header/header.php";
     require_once "controllers/connect.php";
-
-
 
     $result = $mysql->query("SELECT films.*, GROUP_CONCAT(DISTINCT genre.genre SEPARATOR ', ') AS genres, 
                                     AVG(CASE WHEN comments.id_comment = films.id THEN comments.rating ELSE NULL END) AS average_rating FROM films 

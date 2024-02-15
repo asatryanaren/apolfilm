@@ -1,11 +1,8 @@
-<?php require_once "view/header/header.php"; ?>
-
 <?php
+    require_once "view/header/header.php";
     require_once "controllers/connect.php";
+
     $genre = $_GET["genre"];
-//SELECT genre.genre, COUNT(DISTINCT films_genre.id_film) AS count_films FROM genre
-//                                    INNER JOIN films_genre ON genre.id = films_genre.id_genre
-//                                    INNER JOIN films ON films.id = films_genre.id_film WHERE films.id = films_genre.id_film GROUP BY  genre.genre;
 
     $result = $mysql->query("SELECT DISTINCT films.* FROM films INNER JOIN films_genre ON films.id = films_genre.id_film
                                     INNER JOIN genre ON films_genre.id_genre = genre.id WHERE genre.genre = '$genre';");
@@ -18,7 +15,7 @@
         <hr>
             <?php while ($row = $result->fetch_assoc()) : ?>
                 <div class="movies" style="width: 300px; margin:  10px">
-                    <a href="oneMovie.php?id=<?=$row["id"]?>" class="card text-decoration-none movies__item">
+                    <a href="onemovie?id=<?=$row["id"]?>" class="card text-decoration-none movies__item">
                         <img src="images/filmsImg/<?=$row["img"]?>" height="200px" class="card-img-top" alt="...">
                         <div class="card-body">
                             <h5 class="card-title"><?=$row["name"]?></h5>

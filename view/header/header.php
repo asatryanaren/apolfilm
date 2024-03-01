@@ -1,7 +1,8 @@
 <?php
+    require_once "model/HeaderDBUserName.php";
+    $userDB = new HeaderDBUserName();
+    $result = $userDB->getUserLoginName();
     $name = $_COOKIE["user"];
-    $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT regist_users.* FROM regist_users WHERE regist_users.name = '$name';")->fetch_assoc();
 ?>
 
 <!doctype html>
@@ -14,16 +15,19 @@
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/app.css">
     <script src="assets/js/color-modes.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous">
+    </script>
 </head>
 <body class="d-flex flex-column min-vh-100">
-
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none logo">
                 <h5 class="m-0">Кинопоиск <span class="badge bg-warning warn__badge">Lite</span></h5>
             </a>
-
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li>
                     <a href="/" class="nav-link px-2 text-white d-flex align-items-center column-gap-2">
@@ -42,7 +46,6 @@
                         <span>Лучшее</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="categories" class="nav-link px-2 text-white d-flex align-items-center column-gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">

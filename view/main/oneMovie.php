@@ -3,16 +3,12 @@
         header("Location: ./". $_SERVER["PHP_SELF"]);
     }
     require_once "view/header/header.php";
-    require_once "controllers/connect.php";
-    $id = $_GET["id"];
-    $result = $mysql->query("SELECT films.*, GROUP_CONCAT(DISTINCT genre.genre SEPARATOR ', ') AS genres,
-                                    AVG(CASE WHEN comments.id_comment = films.id THEN comments.rating ELSE NULL END) AS average_rating FROM films 
-                                    LEFT JOIN films_genre ON films.id = films_genre.id_film 
-                                    LEFT JOIN genre ON films_genre.id_genre = genre.id 
-                                    LEFT JOIN comments ON films.id = comments.id_comment WHERE films.id = '$id' GROUP BY films.id;")->fetch_assoc();
-    $resultComments = $mysql->query("SELECT comments.* FROM films LEFT JOIN comments ON films.id = comments.id_comment
-                                            WHERE films.id = '$id' ORDER BY comments.date DESC;");
-    $mysql->close();
+    require_once "model/OneMovie.php";
+    $sqlDB = new OneMovie();
+    $resultMovie = $sqlDB->selectFilmDB();
+    $resultComments = $sqlDB->selectCommentDB();
+    $id = $sqlDB->selectId();
+
 ?>
 
 <main>
@@ -21,7 +17,7 @@
             <div class="card mb-3 mt-3 one-movie__item">
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <img  src="images/filmsImg/<?=$result["img"]?>" class="img-fluid rounded one-movie__image" alt="...">
+                        <img  src="images/filmsImg/<?=$resultMovie["img"]?>" class="img-fluid rounded one-movie__image" alt="...">
                             <form action="../../controllers/comments.php" method="post" class="m-3 w-100">
                                 <?= $grade ?>
                                 <select name="grade" class="form-select" aria-label="Default select example">
@@ -41,16 +37,16 @@
                     <div class="col-md-8">
                         <?php if ($resultComments != null) : ?>
                         <div class="card-body">
-                            <h1 class="card-title"><?=$result["name"]?></h1>
+                            <h1 class="card-title"><?=$resultMovie["name"]?></h1>
                             <p>Жанры</p>
-                            <p><?=$result["genres"]?></p>
-                            <p class="card-text">Оценка <span class="badge bg-warning warn__badge"><?=floor($result["average_rating"])?></span></p>
-                            <p class="card-text"><?=$result["descriptions"]?></p>
+                            <p><?=$resultMovie["genres"]?></p>
+                            <p class="card-text">Оценка <span class="badge bg-warning warn__badge"><?=floor($resultMovie["average_rating"])?></span></p>
+                            <p class="card-text"><?=$resultMovie["descriptions"]?></p>
                             <h4>Отзывы</h4>
                             <?php while ($row = $resultComments->fetch_assoc()) : ?>
                             <?php $d = $row["date"] == null ? null : "<p class='card-text'><small class='text-body-secondary'>Дата {$row['date']} </small></p>"; echo $d;?>
                             <div class="one-movie__reviews">
-                                <?php if ($row["comment"] || $result["rating"]) : ?>
+                                <?php if ($row["comment"] || $resultMovie["rating"]) : ?>
                                     <div class="card">
                                         <div class="card-header">
                                             Пользователь: <?=$row["wrote"]?>

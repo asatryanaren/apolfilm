@@ -11,24 +11,31 @@
 <body class="d-flex align-items-center py-4 bg-body-tertiary">
 
 <main class="form-signin w-100 m-auto">
-    <form action="../controllers/login.php" method="post">
+    <form id="loginForm">
         <div class="d-flex" style="align-items: center; justify-content: space-between">
             <h2>Вход</h2>
             <a href="/" class="d-flex align-items-center mb-5 mb-lg-0 text-white text-decoration-none">
                 <h5 class="m-0">Кинопоиск <span class="badge bg-warning warn__badge">Lite</span></h5>
             </a>
         </div>
+        <div id="loginError" style="color: red"></div>
         <div class="form-floating mt-3">
-            <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@areaweb.su"> <label for="floatingInput">E-mail</label>
+            <input id="email" type="email" class="form-control" id="floatingInput" placeholder="name@areaweb.su"> <label for="floatingInput">E-mail</label>
         </div>
         <div class="form-floating">
-            <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль"> <label for="floatingPassword">Пароль</label>
+            <input id="password" type="password" class="form-control" id="floatingPassword" placeholder="Пароль"> <label for="floatingPassword">Пароль</label>
         </div>
         <button class="btn btn-primary w-100 py-2" type="submit">Войти</button>
         <p class="mt-5 mb-3 text-body-secondary">&copy; Кинопоиск Lite 2023</p>
     </form>
 </main>
 
+<script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous">
+</script>
+<script src="../assets/js/ajaxLogin.js" ></script>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

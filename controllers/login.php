@@ -1,33 +1,42 @@
 <?php
+    require_once "../model/ConnectDB.php";
+    require_once "../model/Log.php";
 
-$login = filter_var(trim($_POST["email"]));
-$pass = filter_var(trim($_POST["password"]));
-
-if (mb_strlen($login) != 0 || mb_strlen($pass) != 0) {
-    $pass = md5($pass."adsax655");
-    $mysql = new mysqli("localhost", "root", "", "my_films");
-    $result = $mysql->query("SELECT * FROM `regist_users` WHERE `login` = '$login' AND `pass` = '$pass'");
-    $user = $result->fetch_assoc();
-
-    if ($user != null){
-        if (count($user) == 0) {
-            echo "Такой пользователь не найден";
-            exit();
+    class Login {
+        private $login;
+        private $pass;
+        private $loginDB;
+        public function __construct () {
+            $this->login = filter_var(trim($_POST["email"]));
+            $this->pass = filter_var(trim($_POST["password"]));
+            $this->loginDB = new Log();
         }
+        public function loginUser () {
+            if (mb_strlen($this->login) != 0 || mb_strlen($this->pass) != 0) {
+                $this->pass = md5($this->pass."adsax655");
+
+                $user = $this->loginDB->loginUserDB($this->login, $this->pass)->fetch_assoc();
+
+                if ($user != null){
+                    if (count($user) == 0) {
+                        echo "Такой пользователь не найден";
+                        exit();
+                    }
+                }
+
+                setcookie("user", $user["name"], time() + 3600, "/");
+
+                if (!empty($user)) {
+                    header("Location: /");
+                }else{
+                    header("Location: ../view/login.tpl.php");
+                }
+            }
+        }
+
     }
-
-    setcookie("user", $user["name"], time() + 3600, "/");
-
-    $mysql->close();
-    if (!empty($user)) {
-        header("Location: /");
-    }else{
-        header("Location: ../view/login.tpl.php");
-    }
-
-}
-
-
+    $login = new Login();
+    $login->loginUser();
 
 
 

@@ -1,12 +1,9 @@
 <?php
     require_once "view/header/header.php";
-    require_once "controllers/connect.php";
-
-    $genre = $_GET["genre"];
-
-    $result = $mysql->query("SELECT DISTINCT films.* FROM films INNER JOIN films_genre ON films.id = films_genre.id_film
-                                    INNER JOIN genre ON films_genre.id_genre = genre.id WHERE genre.genre = '$genre';");
-    $mysql->close();
+    require_once "model/FilterCategories.php";
+    $DB = new FilterCategories();
+    $result = $DB->selectDB();
+    $genre = $DB->selectGenre();
 ?>
 
 <main>

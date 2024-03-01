@@ -1,11 +1,8 @@
 <?php
-    require_once "view/header/header.php";
-    require_once "controllers/connect.php";
-
-    $result = $mysql->query("SELECT genre.genre, COUNT(DISTINCT films_genre.id_film) AS count_films FROM genre
-                                    INNER JOIN films_genre ON genre.id = films_genre.id_genre
-                                    INNER JOIN films ON films.id = films_genre.id_film WHERE films.id = films_genre.id_film GROUP BY  genre.genre;");
-    $mysql->close();
+     require_once "view/header/header.php";
+     require_once "model/Categoris.php";
+     $DB = new Categoris();
+     $result = $DB->selectDB();
 ?>
 
 <main>

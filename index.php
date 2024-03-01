@@ -1,19 +1,20 @@
 <?php
-require_once "Routing.php";
+    require_once "Routing.php";
 
-$id = $_GET["id"];
-//echo $id;
+    $id = $_GET["id"];
+    $genre = $_GET["genre"];
 
-$url = key($_GET);
-$r = new Router();
-$r->addRoute("/", "home.php");
-$r->addRoute("/admin", "admin.php");
-$r->addRoute("/categories", "categories.php");
-$r->addRoute("/bestmovies", "bestMovies.php");
-$r->addRoute("/onemovie?id=$id", "oneMovie.php");
-$r->addRoute("/filtercategories", "filterCategories.php");
-$r->addRoute("/login", "view/login.tpl.php");
-$r->addRoute("/registration", "view/register.tpl.php");
-$r->addRoute("/exit", "exit.php");
+    $url = key($_GET);
+    $r = new Router();
 
-$r->route("/".$url );
+    $r->addRoute("/", "view/main/home.php");
+    $r->addRoute("/admin", "view/main/admin.php");
+    $r->addRoute("/categories", "view/main/categories.php");
+    $r->addRoute("/bestmovies", "view/main/BestMovies.php");
+    $r->addRoute("/onemovie?id=$id", "view/main/OneMovie.php");
+    $r->addRoute("/filtercategories?genre=$genre", "view/main/filterCategories.php");
+    $r->addRoute("/login", "view/login.tpl.php");
+    $r->addRoute("/registration", "view/register.tpl.php");
+    $r->addRoute("/exit", "Routing.php");
+
+    $r->route("/".$url );

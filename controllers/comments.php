@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "../model/ConnectDB.php";
 
     class Comments {
@@ -12,7 +13,7 @@
             $this->grade = $_POST["grade"];
             $this->id = $_POST["id"];
             $this->bodyComment = $_POST["bodyComment"];
-            $this->wrote = $_COOKIE["user"];
+            $this->wrote = $_SESSION["user"];
             $this->date = date('Y-m-d H:i:s');
         }
         public function addComments () {
@@ -26,7 +27,7 @@
             }
             $this->connect->close();
 
-            header("Location: ../OneMovie.php?id=$this->id" );
+            header("Location: ../onemovie?id=$this->id" );
         }
     }
     $comments = new Comments();

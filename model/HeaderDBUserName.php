@@ -1,5 +1,6 @@
 <?php
-require_once "ConnectDB.php";
+    session_start();
+    require_once "ConnectDB.php";
     class HeaderDBUserName {
         private $connect;
         private $DB;
@@ -8,7 +9,7 @@ require_once "ConnectDB.php";
         }
         public function getUserLoginName () {
             $this->connect = $this->DB->getConnect();
-            $name = $_COOKIE["user"];
+            $name = $_SESSION["user"];
             return $this->connect->query("SELECT regist_users.* FROM regist_users WHERE regist_users.name = '$name';")->fetch_assoc();
         }
     }

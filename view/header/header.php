@@ -1,8 +1,9 @@
 <?php
+    session_start();
     require_once "model/HeaderDBUserName.php";
     $userDB = new HeaderDBUserName();
     $result = $userDB->getUserLoginName();
-    $name = $_COOKIE["user"];
+    $name = $_SESSION["user"];
 ?>
 
 <!doctype html>
@@ -64,7 +65,7 @@
                     </li>
                 <?php endif; ?>
             </ul>
-            <?php if ( $_COOKIE["user"] == "" ) : ?>
+            <?php if ( $_SESSION["user"] == "" ) : ?>
             <div class="d-flex align-items-center text-end">
                 <a href="login" type="button" class="btn btn-outline-light me-2 d-flex align-items-center column-gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -82,9 +83,9 @@
                 </a>
             </div>
             <?php
-                else: echo "Добро пожаловать " . $_COOKIE["user"];
+                else: echo "Добро пожаловать " . $_SESSION["user"];
                 endif; ?>
-            <?php if ($_COOKIE["user"] != "") : ?>
+            <?php if ($_SESSION["user"] != "") : ?>
             <a style="margin-left: 20px; display: block " href="exit" type="button" class="btn btn-warning d-flex align-items-center column-gap-2">
                 Выйти
             </a>

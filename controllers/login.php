@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once "../model/ConnectDB.php";
     require_once "../model/Log.php";
 
@@ -24,7 +25,7 @@
                     }
                 }
 
-                setcookie("user", $user["name"], time() + 3600, "/");
+                $_SESSION['user'] = $user["name"];
 
                 if (!empty($user)) {
                     header("Location: /");
